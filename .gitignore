@@ -1,0 +1,14 @@
+# Build output
+/bin/
+/dist/
+
+# Throwaway Phase 1 experiments (see ROADMAP.md, Phase 1)
+/scratch/
+
+# Test and profiling artifacts
+*.out
+*.test
+*.prof
+coverage.*
+ROADMAP.md
+learning
