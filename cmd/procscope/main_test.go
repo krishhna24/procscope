@@ -17,6 +17,7 @@ func TestRun(t *testing.T) {
 	}{
 		{name: "version", args: []string{"version"}, wantCode: exitOK, wantStdout: "procscope "},
 		{name: "version short", args: []string{"version", "--short"}, wantCode: exitOK, wantStdout: "dev"},
+		{name: "version short -s", args: []string{"version", "-s"}, wantCode: exitOK, wantStdout: "dev"},
 		{name: "help", args: []string{"help"}, wantCode: exitOK, wantStdout: "Usage:"},
 		{name: "no args", args: nil, wantCode: exitUsage, wantStderr: "Usage:"},
 		{name: "unknown command", args: []string{"bogus"}, wantCode: exitUsage, wantStderr: `unknown command "bogus"`},
