@@ -16,7 +16,7 @@ type Info struct {
 	Version   string
 	Commit    string
 	Date      string
-	Modified  bool // True if built from a tree with uncommited changes
+	Modified  bool // True if built from a tree with uncommitted changes
 	GoVersion string
 }
 
@@ -35,7 +35,7 @@ func Get() Info {
 	}
 
 	if info.Version == "dev" && bi.Main.Version != "" && bi.Main.Version != "(devel)" {
-		info.Version = bi.Main.Version //Set by: go install @v0.1.0
+		info.Version = bi.Main.Version // Set by: go install @v0.1.0
 	}
 
 	for _, s := range bi.Settings {
