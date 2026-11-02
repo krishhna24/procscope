@@ -1,0 +1,26 @@
+# golangci-lint configuration (v2 format)
+# Correctness linters only; style linters are deliberately left out
+
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - govet # suspicious constructs: bad Printf verbs, copied locks, ...
+    - staticcheck # Bugs, simplifications and deprecated APIs
+    - errcheck # error return values that are silently dropped
+    - errorlint # error comparisons that break with wrapped errors
+    - misspell # common English misspellings in comments and strings
+  settings:
+    errcheck:
+      # Short messages written to stdout/stderr: if the terminal is gone
+      # there is nobody to report error to . Bulk output (ps --json in
+      # P3) goes through a bufio.Writer whose Flush error IS checked
+      exclude-functions:
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
+
+formatters:
+  enable:
+    - gofmt
