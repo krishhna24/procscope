@@ -14,8 +14,8 @@ linters:
   settings:
     errcheck:
       # Short messages written to stdout/stderr: if the terminal is gone
-      # there is nobody to report error to . Bulk output (ps --json in
-      # P3) goes through a bufio.Writer whose Flush error IS checked
+      # there is nobody to report the error to. Bulk output (ps --json in
+      # P3) goes through a bufio.Writer whose Flush error IS checked.
       exclude-functions:
         - fmt.Fprint
         - fmt.Fprintf
