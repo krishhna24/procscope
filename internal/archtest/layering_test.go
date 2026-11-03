@@ -2,7 +2,10 @@ package archtest
 
 import (
 	"errors"
+	"io/fs"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"slices"
 	"strings"
 	"testing"
@@ -41,6 +44,7 @@ func TestLayering(t *testing.T) {
 	cmd := exec.Command("go", "list", "-f", "{{.ImportPath}}{{range .Imports}} {{.}}{{end}}", module+"/...")
 
 	out, err := cmd.Output()
+	watchSources(t, "../..")
 
 	if err != nil {
 		var exitErr *exec.ExitError
@@ -74,4 +78,30 @@ func TestLayering(t *testing.T) {
 
 func rel(importPath string) string {
 	return strings.TrimPrefix(importPath, module+"/")
+}
+
+// watchSources stats every .go file in the module. go list runs in a
+// subprocess, so go test can't see which files the result depends on and
+// would replay a cached PASS after a forbidden import is added. Files and
+// directories the test itself opens or stats become part of the cache key.
+func watchSources(t *testing.T, root string) {
+	t.Helper()
+	err := filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() {
+			if path != root && (d.Name() == "scratch" || d.Name() == "learning" || strings.HasPrefix(d.Name(), ".")) {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		if strings.HasSuffix(path, ".go") {
+			_, err = os.Stat(path)
+		}
+		return err
+	})
+	if err != nil {
+		t.Fatalf("walking module sources: %v", err)
+	}
 }
