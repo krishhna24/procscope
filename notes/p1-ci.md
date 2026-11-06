@@ -27,7 +27,11 @@
 
 ## Actual green run (failing test removed)
 
-- Green run: _pending_
+- Green run: https://github.com/krishhna24/procscope/actions/runs/42219979401
+  (commit `ce44684`, which deletes `internal/sample/red_test.go`)
+- All three CI jobs passed: `test` 10s, `vuln` 27s, `lint` 1m0s. The PR kept
+  both workflow runs, so the red and green results sit side by side without a
+  force-push.
 
 ## `make vuln` and the three govulncheck counts
 
