@@ -9,6 +9,8 @@ FUZZTIME ?= 30s
 
 # Pinned linter version. CI (guide 05) uses the same one.
 GOLANGCI_LINT_VERSION := v2.15.0
+GOVULNCHECK_VERSION := v1.9.0
+
 
 .DEFAULT_GOAL := help
 .PHONY: help build test test-race lint fmt tools fuzz-smoke bench integration clean
@@ -47,3 +49,6 @@ integration: ## Run tests that need a live /proc
 
 clean: ## Remove build output
 	rm -rf $(BIN_DIR)
+
+vuln: ## Report known vulnerabilities reachable from the code
+	go run golang.org/x/vuln/cmd/govulncheck@$(GOVULNCHECK_VERSION) ./...
