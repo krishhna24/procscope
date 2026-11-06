@@ -12,10 +12,18 @@
 
 ## Actual red run
 
-- Red run: _pending_
-- Job that failed: _pending_
-- Failing log line: _pending_
-- Actual time-to-signal: _pending_
+- Red run: https://github.com/krishhna24/procscope/actions/runs/42219753744
+  (failing `test` job: https://github.com/krishhna24/procscope/actions/runs/42219753744/job/127898562904)
+- Job that failed: **`test`** — exactly as predicted. `lint` passed (1m4s) and
+  `vuln` passed (21s).
+- Failing log line:
+  `red_test.go:8: intentional failure: CI must catch this`
+  (from `--- FAIL: TestIntentionalRed (0.00s)`, followed by
+  `make: *** [Makefile:29: test-race] Error 1`)
+- Actual time-to-signal: **~20 seconds** from the push to the red `test` check:
+  push at `18:12:34 +05:30`, run created at `18:12:42 +05:30`, and the `test`
+  job failed at `18:12:54 +05:30`. (`gh pr checks --watch` itself finished at
+  `18:13:59` only because the slower `lint` job was still running.)
 
 ## Actual green run (failing test removed)
 
